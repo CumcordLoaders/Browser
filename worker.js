@@ -23,7 +23,7 @@ chrome.debugger.onDetach.addListener((debuggee, reason) => {
 chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
     sendResponse();
 
-    if(msg === "pwnme") {
+    if(msg === "pwnme" && new URL(sender.tab.url).pathname !== "/") {
         let cumcord = await (await fetch("https://raw.githubusercontent.com/Cumcord/builds/main/build.js")).text();
         let loader = await (await fetch(chrome.runtime.getURL("loader.js"))).text();
 
