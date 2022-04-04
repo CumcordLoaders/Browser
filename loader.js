@@ -1,9 +1,9 @@
 let sleep = () => new Promise(r => setTimeout(r));
 
 // Directly taken from Cumcord
-function log(input, color = "#ff5252", type = "info") {
+function log(input, type = "info", title = "CumChrome", color = "#ff5252") {
     console[type](
-      `%cCumChrome%c`,
+      `%c${title}%c`,
       `background-color: ${color}; color: white; border-radius: 4px; padding: 0px 6px 0px 6px; font-weight: bold`,
       "",
       ...input,
