@@ -37,7 +37,6 @@ chrome.runtime.onConnectExternal.addListener(port => {
             if(msg.type === "fetch" && msg.url) {
                 console.log("[CumCSP]", "Request to", msg.url);
                 let res = await fetch(msg.url, msg.options);
-                console.log(res.headers);
 
                 port.postMessage({text: await res.text(), init: {
                     status: res.status,

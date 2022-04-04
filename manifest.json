@@ -12,7 +12,7 @@
         "128": "icons/128.png"
     },
 
-    "permissions": ["activeTab", "tabs", "debugger"],
+    "permissions": ["debugger"],
     "manifest_version": 3,
     "host_permissions": [
         "https://*/*"
