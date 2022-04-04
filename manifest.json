@@ -1,0 +1,34 @@
+{
+    "name": "CumChrome",
+    "version": "1.0",
+    
+    "author": "Phorcys",
+    "homepage_url": "https://cumcord.com",
+    "description": "Cumcord is a lightweight Discord™ client modification, now in your browser.",
+
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    },
+
+    "permissions": ["activeTab", "tabs", "debugger"],
+    "manifest_version": 3,
+    "host_permissions": [
+        "https://*/*"
+    ],
+
+    "background": {
+      "service_worker": "worker.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://discord.com/login", "*://discord.com/app", "*://discord.com/channels/*"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "externally_connectable": {
+        "matches": ["*://discord.com/*"]
+    }
+}
