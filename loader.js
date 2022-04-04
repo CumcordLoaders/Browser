@@ -1,5 +1,15 @@
 let sleep = () => new Promise(r => setTimeout(r));
 
+// Directly taken from Cumcord
+function log(input, color = "#ff5252", type = "info") {
+    console[type](
+      `%cCumChrome%c`,
+      `background-color: ${color}; color: white; border-radius: 4px; padding: 0px 6px 0px 6px; font-weight: bold`,
+      "",
+      ...input,
+    );
+}
+
 function patchFetch() {
     window.fetch = async (...args) => {
         const url = args[0] instanceof URL ? args[0].href : args[0];
@@ -34,13 +44,13 @@ async function communicate(data) {
 }
 
 (async () => {
-    console.log("[CumChrome]", "Patching fetch()");
+    log(["Patching fetch()"]);
     patchFetch();
 
-    console.log("[CumChrome]", "Waiting for inject time...");
+    log(["Waiting for inject time..."]);
     while(!document.querySelector('video[class*="ready-"]')) await sleep();
     while(document.querySelector('video[class*="ready-"]')) await sleep();
-    console.log("[CumChrome]", "Injecting Cumcord");
+    log(["Injecting Cumcord"]);
 
     /placeholder/
 })();
