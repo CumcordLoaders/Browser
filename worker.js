@@ -3,7 +3,7 @@ log(["Loading from extension ID", chrome.runtime.id]);
 // Directly taken from Cumcord, once again, TODO: find a way to avoid redundant code like this
 function log(input, type = "info", title = "CumChrome", color = "#ff5252") {
     if(type == "csp") {
-        color = "#7ac091";
+        color = "#368551";
         title = "CumCSP";
         type = "info";
     }
