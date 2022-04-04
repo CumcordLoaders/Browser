@@ -23,7 +23,10 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://discord.com/login", "*://discord.com/app", "*://discord.com/channels/*"],
+            "matches": [
+                "*://*.discord.com/*",
+                "*://discord.com/*"
+            ],
             "js": ["content.js"],
             "run_at": "document_end"
         }
