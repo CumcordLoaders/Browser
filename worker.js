@@ -1,8 +1,26 @@
+log(["Loading from extension ID", chrome.runtime.id]);
+
+// Directly taken from Cumcord, once again, TODO: find a way to avoid redundant code like this
+function log(input, type = "info", title = "CumChrome", color = "#ff5252") {
+    if(type == "csp") {
+        color = "#7ac091";
+        title = "CumCSP";
+        type = "info";
+    }
+
+    console[type](
+      `%c${title}%c`,
+      `background-color: ${color}; color: white; border-radius: 4px; padding: 0px 6px 0px 6px; font-weight: bold`,
+      "",
+      ...input,
+    );
+}
+
 function impregnate(tabId, code, detachOnFinish = true) {
     chrome.debugger.attach({
         tabId
     }, "1.3", () => {
-        console.log("[CumChrome]", "Cumming in tab", tabId);
+        log(["Cumming in tab ID", tabId]);
 
         chrome.debugger.sendCommand({
             tabId
@@ -10,14 +28,14 @@ function impregnate(tabId, code, detachOnFinish = true) {
             expression: code,
             allowUnsafeEvalBlockedByCSP: true
         }, () => {
-            console.log("[CumChrome]", "Cummed in tab", tabId);
+            log(["Cummed in tab ID", tabId]);
             if(detachOnFinish) chrome.debugger.detach({ tabId });
         });
     });
 }
 
 chrome.debugger.onDetach.addListener((debuggee, reason) => {
-    console.error("[CumChrome]", "Tab", debuggee.tabId, "went to an abortion clinic", reason);
+    log(["Tab", debuggee.tabId, "went to an abortion clinic", reason], "error");
 });
 
 chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
@@ -32,18 +50,30 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 });
 
 chrome.runtime.onConnectExternal.addListener(port => {
-    port.onMessage.addListener(async msg => {
+    async function messageHandler(msg) {
         if(msg.type) {
             if(msg.type === "fetch" && msg.url) {
-                console.log("[CumCSP]", "Request to", msg.url);
+                log(["Request to", msg.url], "csp");
                 let res = await fetch(msg.url, msg.options);
 
-                port.postMessage({text: await res.text(), init: {
-                    status: res.status,
-                    statusText: res.statusText,
-                    headers: res.headers
-                }});
+                // Sometimes clients disconnect before receiving the response, therefore causing errors in the extension tab
+                if(port.onMessage.hasListener(messageHandler)) {
+                    port.postMessage({text: await res.text(), init: {
+                        status: res.status,
+                        statusText: res.statusText,
+                        headers: res.headers
+                    }});
+                }
             }
         }
-    });
+    }
+
+    async function disconnectHandler() {
+        port.onMessage.removeListener(messageHandler);
+        port.disconnect();
+        port.onDisconnect.removeListener(disconnectHandler);
+    }
+
+    port.onMessage.addListener(messageHandler);
+    port.onDisconnect.addListener(disconnectHandler);
 });
