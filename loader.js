@@ -27,9 +27,9 @@ async function communicate(data) {
 
     return new Promise((resolve, reject) => {
         let listener = (msg) => {
-            resolve(msg);
             port.onMessage.removeListener(listener);
             port.disconnect();
+            resolve(msg);
         };
 
         port.onMessage.addListener(listener);
@@ -38,7 +38,7 @@ async function communicate(data) {
         setTimeout(() => {
             port.onMessage.removeListener(listener);
             port.disconnect();
-            reject("Request timed out.");
+            reject(new Error("Request timed out."));
         }, 2000);
     });
 }
