@@ -1,6 +1,6 @@
 log(["Loading from extension ID", chrome.runtime.id]);
 
-// Directly taken from Cumcord, once again, TODO: find a way to avoid redundant code like this
+// Directly taken from Cumcord
 function log(input, type = "info", title = "CumChrome", color = "#ff5252") {
     if(type == "csp") {
         color = "#368551";
@@ -9,10 +9,10 @@ function log(input, type = "info", title = "CumChrome", color = "#ff5252") {
     }
 
     console[type](
-      `%c${title}%c`,
-      `background-color: ${color}; color: white; border-radius: 4px; padding: 0px 6px 0px 6px; font-weight: bold`,
-      "",
-      ...input,
+        `%c${title}%c`,
+        `background-color: ${color}; color: white; border-radius: 4px; padding: 0px 6px 0px 6px; font-weight: bold`,
+        "",
+        ...input,
     );
 }
 
@@ -45,7 +45,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
         let cumcord = await (await fetch("https://raw.githubusercontent.com/Cumcord/builds/main/build.js")).text();
         let loader = await (await fetch(chrome.runtime.getURL("loader.js"))).text();
 
-        impregnate(sender.tab.id, loader.replace("/extid/", chrome.runtime.id).replace("/placeholder/", cumcord));
+        impregnate(sender.tab.id, log + loader.replace("/extid/", chrome.runtime.id).replace("/placeholder/", cumcord));
     }
 });
 

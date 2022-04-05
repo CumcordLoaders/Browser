@@ -1,15 +1,5 @@
 let sleep = () => new Promise(r => setTimeout(r));
 
-// Directly taken from Cumcord
-function log(input, type = "info", title = "CumChrome", color = "#ff5252") {
-    console[type](
-      `%c${title}%c`,
-      `background-color: ${color}; color: white; border-radius: 4px; padding: 0px 6px 0px 6px; font-weight: bold`,
-      "",
-      ...input,
-    );
-}
-
 function patchFetch() {
     window.fetch = async (...args) => {
         const url = args[0] instanceof URL ? args[0].href : args[0];
