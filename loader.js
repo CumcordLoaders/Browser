@@ -4,9 +4,11 @@ function patchFetch() {
     window.fetch = async (...args) => {
         const url = args[0] instanceof URL ? args[0].href : args[0];
         const result = await communicate({type: "fetch", url, options: args[1] ?? {}});
+        
+        if(result.error) throw new (window[result.error.type] ?? Error)(result.error.text);
 
         let res = new Response(result.text, result.init);
-        res.__defineGetter__("url", () => res.url);
+        res.__defineGetter__("url", () => url);
 
         return res;
     };
@@ -19,7 +21,7 @@ async function communicate(data) {
         let listener = (msg) => {
             port.onMessage.removeListener(listener);
             port.disconnect();
-            resolve(msg);
+            return resolve(msg);
         };
 
         port.onMessage.addListener(listener);

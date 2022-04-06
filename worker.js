@@ -50,20 +50,30 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 });
 
 chrome.runtime.onConnectExternal.addListener(port => {
-    async function messageHandler(msg) {
+    function messageHandler(msg) {
         if(msg.type) {
             if(msg.type === "fetch" && msg.url) {
                 log(["Request to", msg.url], "csp");
-                let res = await fetch(msg.url, msg.options);
+                fetch(msg.url, msg.options).then(async res => {
+                    if(port.onMessage.hasListener(messageHandler)) {
+                        port.postMessage({text: await res.text(), init: {
+                            status: res.status,
+                            statusText: res.statusText,
+                            headers: res.headers
+                        }});
+                    }
+                }).catch(e => {
+                    let error = e.toString().split(": ");
 
-                // Sometimes clients disconnect before receiving the response, therefore causing errors in the extension tab
-                if(port.onMessage.hasListener(messageHandler)) {
-                    port.postMessage({text: await res.text(), init: {
-                        status: res.status,
-                        statusText: res.statusText,
-                        headers: res.headers
-                    }});
-                }
+                    if(port.onMessage.hasListener(messageHandler)) {
+                        port.postMessage({
+                            error : {
+                                type: error[0],
+                                text: error[1]
+                            }
+                        });
+                    }
+                });
             }
         }
     }
