@@ -10,10 +10,10 @@
 
 <p align="center">
     <a href="https://chrome.google.com/webstore/detail/cumchrome/pfmlgebacgjbhlbdmlpmjldhkoeohbnl">
-        <img src="https://img.shields.io/badge/Chrome-Web%20Store-2ea14d?logo=chrome&style=flat-square" />
+        <img src="https://img.shields.io/badge/Chrome-Web%20Store-2ea14d?logo=googlechrome&logoColor=white&style=flat-square" />
     </a>
     <a href="https://github.com/CumcordLoaders/Chrome/wiki/Manual-Install">
-        <img src="https://img.shields.io/badge/Chrome-Manual%20install-e03d30?logo=chrome&style=flat-square" />
+        <img src="https://img.shields.io/badge/Chrome-Manual%20install-e03d30?logo=googlechrome&logoColor=white&style=flat-square" />
     </a>
 </p>
 
