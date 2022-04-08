@@ -1,7 +1,7 @@
 log(["Loading from extension ID", chrome.runtime.id]);
 
 // Directly taken from Cumcord
-function log(input, type = "info", title = "CumChrome", color = "#ff5252") {
+function log(input, type = "info", title = "CumLoad", color = "#ff5252") {
     if(type == "csp") {
         color = "#368551";
         title = "CumCSP";
@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 
     if(msg === "pwnme" && new URL(sender.tab.url).pathname !== "/") {
         let cumcord = await (await fetch("https://raw.githubusercontent.com/Cumcord/builds/main/build.js")).text();
-        let loader = await (await fetch(chrome.runtime.getURL("loader.js"))).text();
+        let loader = await (await fetch(chrome.runtime.getURL("src/loader.js"))).text();
 
         impregnate(sender.tab.id, log + loader.replace("/extid/", chrome.runtime.id).replace("/placeholder/", cumcord));
     }

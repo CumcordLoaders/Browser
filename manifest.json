@@ -1,9 +1,9 @@
 {
-    "name": "CumChrome",
-    "version": "1.1",
+    "name": "CumLoad",
+    "version": "1.2",
     
     "author": "Phorcys",
-    "homepage_url": "https://github.com/CumcordLoaders/Chrome",
+    "homepage_url": "https://github.com/CumcordLoaders/Browser",
     "description": "Cumcord is a lightweight Discord™ client modification, now in your browser.",
 
     "icons": {
@@ -19,7 +19,7 @@
     ],
 
     "background": {
-      "service_worker": "worker.js"
+      "service_worker": "src/worker.js"
     },
     "content_scripts": [
         {
@@ -27,7 +27,7 @@
                 "*://*.discord.com/*",
                 "*://discord.com/*"
             ],
-            "js": ["content.js"],
+            "js": ["src/content.js"],
             "run_at": "document_end"
         }
     ],

@@ -1,4 +1,4 @@
-let sleep = () => new Promise(r => setTimeout(r));
+const sleep = () => new Promise(r => setTimeout(r));
 
 function patchFetch() {
     window.fetch = async (...args) => {
@@ -40,8 +40,8 @@ async function communicate(data) {
     patchFetch();
 
     log(["Waiting for inject time..."]);
-    while(!document.querySelector('video[class*="ready-"]')) await sleep();
-    while(document.querySelector('video[class*="ready-"]')) await sleep();
+    while(!document.querySelector("video[class*='ready-']")) await sleep();
+    while(document.querySelector("video[class*='ready-']")) await sleep();
     log(["Injecting Cumcord"]);
 
     /placeholder/
