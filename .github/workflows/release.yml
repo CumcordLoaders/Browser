@@ -6,7 +6,7 @@ on:
 
 jobs:
   release:
-    if: contains(github.event.head_commit.message, "[publish]")
+    if: contains(github.event.head_commit.message, '[publish]')
     runs-on: ubuntu-latest
     steps:
       - name: Package extension
@@ -17,7 +17,7 @@ jobs:
       - name: Release to GitHub
         uses: marvinpinto/action-automatic-releases@latest
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.GH_TOKEN }}
           prerelease: false
           files: |
             extension.zip
