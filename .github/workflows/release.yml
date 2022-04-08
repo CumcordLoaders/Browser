@@ -1,0 +1,23 @@
+name: Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  release:
+    if: contains(github.event.head_commit.message, "[publish]")
+    runs-on: ubuntu-latest
+    steps:
+      - name: Package extension
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r extension.zip src icons manifest.json
+
+      - name: Release to GitHub
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          files: |
+            extension.zip
