@@ -6,9 +6,11 @@ function patchFetch() {
         const result = await communicate({type: "fetch", url, options: args[1] ?? {}});
         
         if(result.error) throw new (window[result.error.type] ?? Error)(result.error.text);
+        const headers = new Headers(result.headers ?? {});
 
         let res = new Response(result.text, result.init);
         res.__defineGetter__("url", () => url);
+        res.__defineGetter__("headers", () => headers);
 
         return res;
     };

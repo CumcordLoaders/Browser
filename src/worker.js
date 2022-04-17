@@ -56,11 +56,15 @@ chrome.runtime.onConnectExternal.addListener(port => {
                 log(["Request to", msg.url], "csp");
                 fetch(msg.url, msg.options).then(async res => {
                     if(port.onMessage.hasListener(messageHandler)) {
-                        port.postMessage({text: await res.text(), init: {
-                            status: res.status,
-                            statusText: res.statusText,
-                            headers: res.headers
-                        }});
+                        port.postMessage({
+                            text: await res.text(), 
+                            headers: Object.fromEntries([...res.headers]),
+
+                            init: {
+                                status: res.status,
+                                statusText: res.statusText
+                            }
+                        });
                     }
                 }).catch(e => {
                     let error = e.toString().split(": ");
