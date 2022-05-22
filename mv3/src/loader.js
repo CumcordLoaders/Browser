@@ -9,8 +9,17 @@ function patchFetch() {
         const headers = new Headers(result.headers ?? {});
 
         let res = new Response(result.text, result.init);
-        res.__defineGetter__("url", () => url);
-        res.__defineGetter__("headers", () => headers);
+		Object.defineProperties(res, {
+			url: {
+				value: url,
+				writable: false
+			},
+
+			headers: {
+				value: headers,
+				writable: false
+			}
+		});
 
         return res;
     };
