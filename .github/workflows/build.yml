@@ -25,12 +25,14 @@ jobs:
           - name: Build MV3
             run: node build/index.mjs -c false -m 3
 
-          - uses: actions/upload-artifact@v3
+          - name: Upload MV2
+            uses: actions/upload-artifact@v3
             with:
               name: mv2
               path: dist/mv2.zip
 
-          - uses: actions/upload-artifact@v3
+          - name: Upload MV3
+            uses: actions/upload-artifact@v3
             with:
               name: mv3
               path: dist/mv3.zip

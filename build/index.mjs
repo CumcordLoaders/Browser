@@ -91,10 +91,8 @@ async function deleteIfExists(path) {
 	};
 	files["manifest.json"] = JSON.stringify(manifest, null, "	");
 
-	if(argv.clean) {
-		await deleteIfExists(dist);
-		await mkdir(dist);
-	}
+	if(argv.clean) await deleteIfExists(dist);
+	if(!await fileExists(dist)) await mkdir(dist);
 	
 	if(argv.format === "folder") {
 		const folder = join(dist, `mv${argv.manifest}`);
