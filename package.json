@@ -1,0 +1,25 @@
+{
+  "name": "cumload",
+  "description": "CumLoad is a Chrome Extension that allows you to load Cumcord and plugins inside your Discord pages.",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CumcordLoaders/Browser.git"
+  },
+  "keywords": [],
+  "author": "Phorcys",
+  "license": "CC-0",
+  "bugs": {
+    "url": "https://github.com/CumcordLoaders/Browser/issues"
+  },
+  "homepage": "https://github.com/CumcordLoaders/Browser#readme",
+  "devDependencies": {
+    "jszip": "^3.10.0",
+    "modernlog": "^1.0.2",
+    "rollup": "^2.74.1",
+    "rollup-plugin-esbuild": "^4.9.1",
+    "yargs": "^17.5.1"
+  }
+}

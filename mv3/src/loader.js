@@ -1,4 +1,4 @@
-const sleep = () => new Promise(r => setTimeout(r));
+import { log, sleep, waitForDiscordToLoad } from "../../lib/stdlib.js";
 
 function patchFetch() {
     window.fetch = async (...args) => {
@@ -37,14 +37,17 @@ async function communicate(data) {
     });
 }
 
-(async () => {
-    log(["Patching fetch()"]);
-    patchFetch();
+// The stuff happens here
+log(["Patching fetch()"]);
+patchFetch();
 
-    log(["Waiting for inject time..."]);
-    while(!document.querySelector("video[class*='ready-']")) await sleep();
-    while(document.querySelector("video[class*='ready-']")) await sleep();
-    log(["Injecting Cumcord"]);
+log(["Waiting for inject time..."]);
 
-    /placeholder/
-})();
+waitForDiscordToLoad().then(() => {
+	log(["Injecting Cumcord"]);
+
+	// This gets replaced by the worker at runtime
+	doit();
+}).catch(e => {
+	log(["Cumcord will not be injected", "\n", e], "error");
+});

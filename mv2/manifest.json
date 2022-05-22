@@ -1,0 +1,38 @@
+{
+    "version": "1.2.2",
+
+    "manifest_version": 2,
+
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "*://*.discord.com/*"
+    ],
+
+	"externally_connectable": {
+		"matches": ["*://*.discord.com/*"]
+	},
+    
+    "background": {
+        "scripts": [ "src/background.js" ]
+    },
+
+    "content_scripts": [
+        {
+            "matches": [ "*://*.discord.com/*" ],
+            "js": [ "src/loader.js"]
+        },
+
+		{
+			"matches": [ "*://*/*" ],
+			"js": [ "src/global.js" ],
+			"run_at": "document_end"
+		}
+    ],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "cumchrome@cumcord.com"
+        }
+    }
+}

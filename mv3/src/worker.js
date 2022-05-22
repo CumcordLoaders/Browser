@@ -1,20 +1,6 @@
+import { log } from "../../lib/stdlib.js";
+
 log(["Loading from extension ID", chrome.runtime.id]);
-
-// Directly taken from Cumcord
-function log(input, type = "info", title = "CumLoad", color = "#ff5252") {
-    if(type == "csp") {
-        color = "#368551";
-        title = "CumCSP";
-        type = "info";
-    }
-
-    console[type](
-        `%c${title}%c`,
-        `background-color: ${color}; color: white; border-radius: 4px; padding: 0px 6px 0px 6px; font-weight: bold`,
-        "",
-        ...input,
-    );
-}
 
 function impregnate(tabId, code, detachOnFinish = true) {
     chrome.debugger.attach({
@@ -45,7 +31,8 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
         let cumcord = await (await fetch("https://raw.githubusercontent.com/Cumcord/builds/main/build.js")).text();
         let loader = await (await fetch(chrome.runtime.getURL("src/loader.js"))).text();
 
-        impregnate(sender.tab.id, log + loader.replace("/extid/", chrome.runtime.id).replace("/placeholder/", cumcord));
+		// doit() needs a function because Cumcord dist usually contains "$&" which puts doit() in random places and produces syntax errors
+        impregnate(sender.tab.id, loader.replace("/extid/", chrome.runtime.id).replace("doit()", () => cumcord));
     }
 });
 

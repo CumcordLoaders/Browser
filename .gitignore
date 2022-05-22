@@ -1,2 +1,7 @@
-*.crx
 *.zip
+*.xpi
+*.crx
+
+.vscode
+node_modules
+dist
