@@ -1,0 +1,36 @@
+name: Build and deploy
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v2
+
+          - name: Prepare environment
+            uses: actions/setup-node@v2
+            with:
+                node-version: "16"
+
+          - name: Install dependencies
+            run: npm install -D
+
+          - name: Build MV2
+            run: node build/index.mjs -c false -m 2
+
+          - name: Build MV3
+            run: node build/index.mjs -c false -m 3
+
+          - uses: actions/upload-artifact@v3
+            with:
+              name: mv2
+              path: dist/mv2.zip
+
+          - uses: actions/upload-artifact@v3
+            with:
+              name: mv3
+              path: dist/mv3.zip
