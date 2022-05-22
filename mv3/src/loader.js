@@ -1,4 +1,4 @@
-import { log, sleep, waitForDiscordToLoad } from "../../lib/stdlib.js";
+import { log, sleep, waitForDiscordToLoad } from "@stdlib";
 
 function patchFetch() {
     window.fetch = async (...args) => {

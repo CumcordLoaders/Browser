@@ -9,10 +9,19 @@ import argv from "./argv.mjs";
 
 import { rollup } from "rollup";
 import esbuild from "rollup-plugin-esbuild";
+import alias from "@rollup/plugin-alias";
+
 import JSZip from "jszip";
 
 let options = {
-	plugins: [esbuild()]
+	plugins: [
+		alias({
+			entries: [
+			  { find: "@stdlib", replacement: "lib/stdlib.js" },
+			]
+		  }),
+		esbuild()
+	]
 };
 
 let toBuild = {};

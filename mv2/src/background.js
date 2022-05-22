@@ -1,4 +1,4 @@
-import { log } from "../../lib/stdlib.js";
+import { log } from "@stdlib";
 
 log(["Loading from", chrome.runtime.id]);
 

@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/CumcordLoaders/Browser#readme",
   "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.9",
     "jszip": "^3.10.0",
     "modernlog": "^1.0.2",
     "rollup": "^2.74.1",

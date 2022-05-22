@@ -1,4 +1,4 @@
-import { log, sleep, injectScriptTag, waitForDiscordToLoad } from "../../lib/stdlib.js";
+import { log, sleep, injectScriptTag, waitForDiscordToLoad } from "@stdlib";
 let toWindow = [ log, sleep, injectScriptTag, waitForDiscordToLoad ];
 
 // :trolla:, I HATE THIS
