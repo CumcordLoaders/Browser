@@ -20,19 +20,19 @@ jobs:
             run: npm install -D
 
           - name: Build MV2
-            run: node build/index.mjs -c false -m 2
+            run: node build/index.mjs -c false -f folder -m 2
 
           - name: Build MV3
-            run: node build/index.mjs -c false -m 3
+            run: node build/index.mjs -c false -f folder -m 3
 
           - name: Upload MV2
             uses: actions/upload-artifact@v3
             with:
               name: mv2
-              path: dist/mv2.zip
+              path: dist/mv2
 
           - name: Upload MV3
             uses: actions/upload-artifact@v3
             with:
               name: mv3
-              path: dist/mv3.zip
+              path: dist/mv3
