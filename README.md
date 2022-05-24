@@ -22,11 +22,22 @@
     <a href="https://github.com/CumcordLoaders/Browser/wiki/Manual-Install#firefox">
         <img src="https://img.shields.io/badge/Firefox-Manual%20install-e03d30?logo=firefox&logoColor=white&style=flat-square" />
     </a>
+	<br/>
+	<a href="https://microsoftedge.microsoft.com/addons/detail/cumload/oncceaejbmigeaobecgcggnenpkapnma">
+        <img src="https://img.shields.io/badge/Edge-Web%20Store-2ea14d?logo=microsoftedge&logoColor=white&style=flat-square" />
+    </a>
+    <a href="https://github.com/CumcordLoaders/Browser/wiki/Manual-Install#chrome">
+        <img src="https://img.shields.io/badge/Edge-Manual%20install-e03d30?logo=microsoftedge&logoColor=white&style=flat-square" />
+    </a>
 </p>
 
 ---
 
 CumLoad is a Chrome Extension that allows you to load [Cumcord](https://github.com/Cumcord/Cumcord) and plugins inside your Discord pages.
+
+CumLoad features a replacement for the [Cumcord websocket API](https://docs.cumcord.com/#/plugin-guide/?id=cumcord-websocket-api) called CumIPC. This allows developers to integrate communication for web-only users!
+
+---
 
 We recommend using the [MV2 version](https://github.com/CumcordLoaders/Browser/tree/mv2) because of the reasons listed in the next section, every store version is Manifest V2, except for Chrome, which we recommend manual install for.
 
