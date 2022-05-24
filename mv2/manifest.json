@@ -22,7 +22,7 @@
         },
 
 		{
-			"matches": [ "*://*/*" ],
+			"matches": [ "<all_urls>", "*://*/*" ],
 			"exclude_matches": [ "*://*.discord.com/*" ],
 
 			"js": [ "src/stdlib.js", "src/ipc.js" ],

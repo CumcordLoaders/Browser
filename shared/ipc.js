@@ -3,6 +3,7 @@ import { sendData } from "@ipc";
 
 let port;
 
+log(["Loading client page IPC"], "ipc");
 // Listen to requests from the webpage
 window.addEventListener("cumload", event => {
 	// Only connect to the background page on first request
