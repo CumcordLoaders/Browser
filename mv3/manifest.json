@@ -10,15 +10,28 @@
     "background": {
       "service_worker": "src/worker.js"
     },
+
     "content_scripts": [
         {
             "matches": [
                 "*://*.discord.com/*",
                 "*://discord.com/*"
             ],
-            "js": ["src/content.js"],
+
+            "js": [ "src/stdlib.js", "src/content.js" ],
             "run_at": "document_end"
-        }
+        },
+
+		{
+			"matches": ["<all_urls>"],
+			"exclude_matches": [
+                "*://*.discord.com/*",
+                "*://discord.com/*"
+            ],
+
+			"js": [ "src/stdlib.js", "src/ipc.js" ],
+			"run_at": "document_end"
+		}
     ],
     "externally_connectable": {
         "matches": [

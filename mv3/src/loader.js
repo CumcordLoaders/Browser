@@ -1,9 +1,9 @@
-import { log, sleep, waitForDiscordToLoad } from "@stdlib";
+import { initializePageIPC } from "@ipc";
 
 function patchFetch() {
     window.fetch = async (...args) => {
         const url = args[0] instanceof URL ? args[0].href : args[0];
-        const result = await communicate({type: "fetch", url, options: args[1] ?? {}});
+        const result = await communicate({type: "fetch", url, options: args[1] ?? {}}, "/extid/");
         
         if(result.error) throw new (window[result.error.type] ?? Error)(result.error.text);
         const headers = new Headers(result.headers ?? {});
@@ -25,8 +25,8 @@ function patchFetch() {
     };
 }
 
-async function communicate(data) {
-    let port = chrome.runtime.connect("/extid/", {name: (Math.random() + 1).toString(36).substring(7)});
+async function communicate(data, extid, timeout = 2000) {
+    let port = chrome.runtime.connect(extid, {name: (Math.random() + 1).toString(36).substring(7)});
 
     return new Promise((resolve, reject) => {
         let listener = (msg) => {
@@ -38,11 +38,13 @@ async function communicate(data) {
         port.onMessage.addListener(listener);
         port.postMessage(data);
         
-        setTimeout(() => {
-            port.onMessage.removeListener(listener);
-            port.disconnect();
-            reject(new Error("Request timed out."));
-        }, 2000);
+		if(timeout !== Infinity) {
+			setTimeout(() => {
+				port.onMessage.removeListener(listener);
+				port.disconnect();
+				reject(new Error("Request timed out."));
+			}, timeout);
+		}
     });
 }
 
@@ -52,11 +54,14 @@ patchFetch();
 
 log(["Waiting for inject time..."]);
 
-waitForDiscordToLoad().then(() => {
+waitForDiscordToLoad().then(async () => {
 	log(["Injecting Cumcord"]);
 
 	// This gets replaced by the worker at runtime
 	doit();
+
+	await cumcord.cum();
+	initializePageIPC();
 }).catch(e => {
 	log(["Cumcord will not be injected", "\n", e], "error");
 });

@@ -1,18 +1,19 @@
-import { log, sleep, injectScriptTag, waitForDiscordToLoad } from "@stdlib";
-let toWindow = [ log, sleep, injectScriptTag, waitForDiscordToLoad ];
+import { sendData, initializePageIPC, initializeContentIPC } from "@ipc";
 
-// :trolla:, I HATE THIS
-for(const func of toWindow)
-	injectScriptTag(`window["${func.name}"] = ${func};`)
+// Listen to answers from cc
+initializeContentIPC();
 
 injectScriptTag(() => {
-    log(["Waiting for inject time..."]);
+	log(["Waiting for inject time..."]);
 
-    waitForDiscordToLoad().then(async () => {
+	waitForDiscordToLoad().then(async () => {
 		log(["Injecting Cumcord"]);
-
-    	injectScriptTag(await (await fetch("https://raw.githubusercontent.com/Cumcord/builds/main/build.js")).text());
+	
+		injectScriptTag(await (await fetch("https://raw.githubusercontent.com/Cumcord/builds/main/build.js")).text());
+		
+		await cumcord.cum();
+		initializePageIPC();
 	}).catch(e => {
 		log(["Cumcord will not be injected", "\n", e], "error");
 	});
-});
+}, [ waitForDiscordToLoad, sleep, log, injectScriptTag, sendData, initializePageIPC ]);

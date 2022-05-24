@@ -8,24 +8,24 @@
         "webRequestBlocking",
         "*://*.discord.com/*"
     ],
-
-	"externally_connectable": {
-		"matches": ["*://*.discord.com/*"]
-	},
     
     "background": {
-        "scripts": [ "src/background.js" ]
+        "scripts": [ "src/stdlib.js", "src/background.js" ]
     },
 
     "content_scripts": [
         {
             "matches": [ "*://*.discord.com/*" ],
-            "js": [ "src/loader.js"]
+
+            "js": [ "src/stdlib.js", "src/loader.js"],
+			"run_at": "document_end"
         },
 
 		{
 			"matches": [ "*://*/*" ],
-			"js": [ "src/global.js" ],
+			"exclude_matches": [ "*://*.discord.com/*" ],
+
+			"js": [ "src/stdlib.js", "src/ipc.js" ],
 			"run_at": "document_end"
 		}
     ],

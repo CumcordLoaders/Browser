@@ -17,7 +17,7 @@ let options = {
 	plugins: [
 		alias({
 			entries: [
-			  { find: "@stdlib", replacement: "lib/stdlib.js" },
+				{ find: "@ipc", replacement: "lib/ipc.js" }
 			]
 		  }),
 		esbuild()
@@ -31,7 +31,8 @@ switch(argv.manifest) {
 		toBuild = {
 			background: "mv2/src/background.js",
 			loader: "mv2/src/loader.js",
-			global: "mv2/src/global.js"
+
+			ipc: "shared/ipc.js"
 		}
 	break;
 
@@ -39,7 +40,9 @@ switch(argv.manifest) {
 		toBuild = {
 			worker: "mv3/src/worker.js",
 			content: "mv3/src/content.js",
-			loader: "mv3/src/loader.js"
+			loader: "mv3/src/loader.js",
+
+			ipc: "shared/ipc.js"
 		}
 	break;
 }
@@ -56,7 +59,9 @@ async function deleteIfExists(path) {
 	console.log(`Building Manifest V${argv.manifest} extension..`);
 
 	let files = {
-		src: {}
+		src: {
+			"stdlib.js": await readFile(join(__dirname, "..", "lib", "stdlib.js"))
+		}
 	};
 
 	/*

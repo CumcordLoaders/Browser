@@ -1,4 +1,5 @@
-import { log } from "@stdlib";
+importScripts("stdlib.js");
+import { initializeBackgroundIPC } from "@ipc";
 
 log(["Loading from extension ID", chrome.runtime.id]);
 
@@ -31,8 +32,8 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
         let cumcord = await (await fetch("https://raw.githubusercontent.com/Cumcord/builds/main/build.js")).text();
         let loader = await (await fetch(chrome.runtime.getURL("src/loader.js"))).text();
 
-		// doit() needs a function because Cumcord dist usually contains "$&" which puts doit() in random places and produces syntax errors
-        impregnate(sender.tab.id, loader.replace("/extid/", chrome.runtime.id).replace("doit()", () => cumcord));
+		// replace needs a function because Cumcord dist usually contains "$&" which puts doit() in random places and produces syntax errors
+        impregnate(sender.tab.id, log + sleep + waitForDiscordToLoad + loader.replace("/extid/", chrome.runtime.id).replace("doit()", () => cumcord));
     }
 });
 
@@ -78,3 +79,5 @@ chrome.runtime.onConnectExternal.addListener(port => {
     port.onMessage.addListener(messageHandler);
     port.onDisconnect.addListener(disconnectHandler);
 });
+
+initializeBackgroundIPC();
