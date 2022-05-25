@@ -19,7 +19,7 @@ let options = {
 			entries: [
 				{ find: "@ipc", replacement: "lib/ipc.js" }
 			]
-		  }),
+		}),
 		esbuild()
 	]
 };
