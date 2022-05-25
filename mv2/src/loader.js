@@ -16,4 +16,4 @@ injectScriptTag(() => {
 	}).catch(e => {
 		log(["Cumcord will not be injected", "\n", e], "error");
 	});
-}, [ waitForDiscordToLoad, sleep, log, injectScriptTag, sendData, isURLValid, initializePageIPC ]);
+}, [ ...loaderContext, injectScriptTag, sendData, initializePageIPC ]);

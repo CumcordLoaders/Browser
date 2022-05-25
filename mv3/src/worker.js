@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
         let loader = await (await fetch(chrome.runtime.getURL("src/loader.js"))).text();
 
 		// replace needs a function because Cumcord dist usually contains "$&" which puts doit() in random places and produces syntax errors
-        impregnate(sender.tab.id, log + sleep + waitForDiscordToLoad + loader.replace("/extid/", chrome.runtime.id).replace("doit()", () => cumcord));
+        impregnate(sender.tab.id, loaderContext.join("\n") + loader.replace("/extid/", chrome.runtime.id).replace("doit()", () => cumcord));
     }
 });
 
