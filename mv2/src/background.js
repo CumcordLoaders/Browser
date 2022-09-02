@@ -3,7 +3,8 @@ import { initializeBackgroundIPC } from "@ipc";
 log(["Loading from", chrome.runtime.id]);
 
 // CSP Bypass
-chrome.webRequest.onHeadersReceived.addListener(({ responseHeaders }) => {
+chrome.webRequest.onHeadersReceived.addListener(
+  ({ responseHeaders }) => {
     responseHeaders = responseHeaders.filter(header => header.name !== "content-security-policy");
 
     return { responseHeaders };

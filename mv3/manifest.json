@@ -32,11 +32,5 @@
 			"js": [ "src/stdlib.js", "src/ipc.js" ],
 			"run_at": "document_end"
 		}
-    ],
-    "externally_connectable": {
-        "matches": [
-            "*://*.discord.com/*",
-            "*://discord.com/*"
-        ]
-    }
+    ]
 }
