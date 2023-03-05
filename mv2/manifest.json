@@ -10,14 +10,14 @@
     ],
     
     "background": {
-        "scripts": [ "src/stdlib.js", "src/background.js" ]
+        "scripts": [ "lib/stdlib.js", "lib/ipc.js", "src/background.js" ]
     },
 
     "content_scripts": [
         {
             "matches": [ "*://*.discord.com/*" ],
 
-            "js": [ "src/stdlib.js", "src/loader.js"],
+            "js": [ "lib/stdlib.js", "lib/ipc.js", "lib/loader.js", "src/loader.js"],
 			"run_at": "document_end"
         },
 
@@ -25,7 +25,7 @@
 			"matches": [ "<all_urls>", "*://*/*" ],
 			"exclude_matches": [ "*://*.discord.com/*" ],
 
-			"js": [ "src/stdlib.js", "src/ipc.js" ],
+			"js": [ "lib/stdlib.js", "src/page_ipc.js" ],
 			"run_at": "document_end"
 		}
     ],

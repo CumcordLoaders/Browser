@@ -1,5 +1,3 @@
-import { initializeBackgroundIPC } from "@ipc";
-
 log(["Loading from", chrome.runtime.id]);
 
 // CSP Bypass

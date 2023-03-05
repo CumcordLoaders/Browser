@@ -1,7 +1,10 @@
 {
     "version": "2.0",
 	
-	"permissions": ["debugger"],
+	"permissions": [
+        "debugger",
+        "declarativeNetRequestWithHostAccess"
+    ],
     "manifest_version": 3,
     "host_permissions": [
         "https://*/*"
@@ -18,7 +21,7 @@
                 "*://discord.com/*"
             ],
 
-            "js": [ "src/stdlib.js", "src/content.js" ],
+            "js": [ "lib/stdlib.js", "lib/ipc.js", "src/page_ipc.js", "src/content.js" ],
             "run_at": "document_end"
         },
 
@@ -29,8 +32,18 @@
                 "*://discord.com/*"
             ],
 
-			"js": [ "src/stdlib.js", "src/ipc.js" ],
+			"js": [ "lib/stdlib.js", "lib/ipc.js", "src/page_ipc.js" ],
 			"run_at": "document_end"
 		}
-    ]
+    ],
+
+    "declarative_net_request": {
+        "rule_resources": [
+          {
+            "id": "discord_nocsp",
+            "enabled": true,
+            "path": "dnr_rules.json"
+          }
+        ]
+      }
 }

@@ -1,5 +1,5 @@
 //import { randomUUID } from "@stdlib";
-import { sendData } from "@ipc";
+//import { sendData } from "@ipc";
 
 let port;
 

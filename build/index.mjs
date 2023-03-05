@@ -32,7 +32,7 @@ switch(argv.manifest) {
 			background: "mv2/src/background.js",
 			loader: "mv2/src/loader.js",
 
-			ipc: "shared/ipc.js"
+			page_ipc: "shared/page_ipc.js",
 		}
 	break;
 
@@ -40,9 +40,8 @@ switch(argv.manifest) {
 		toBuild = {
 			worker: "mv3/src/worker.js",
 			content: "mv3/src/content.js",
-			loader: "mv3/src/loader.js",
 
-			ipc: "shared/ipc.js"
+			page_ipc: "shared/page_ipc.js"
 		}
 	break;
 }
@@ -59,9 +58,12 @@ async function deleteIfExists(path) {
 	console.log(`Building Manifest V${argv.manifest} extension..`);
 
 	let files = {
-		src: {
-			"stdlib.js": await readFile(join(__dirname, "..", "lib", "stdlib.js"))
-		}
+		lib: {
+			"stdlib.js": await readFile(join(__dirname, "..", "lib", "stdlib.js")),
+			"loader.js": await readFile(join(__dirname, "..", "lib", "loader.js")),
+			"ipc.js": await readFile(join(__dirname, "..", "lib", "ipc.js"))
+		},
+		src: {}
 	};
 
 	/*
@@ -83,8 +85,9 @@ async function deleteIfExists(path) {
 		});
 
 		// Include JavaScript files
-		for (const data of output.filter(e => e.type === "chunk"))
+		for (const data of output.filter(e => e.type === "chunk")) {
 			files.src[`${data.name}.js`] = data.code;
+		}
 	}
 
 	// Include icons
@@ -104,6 +107,10 @@ async function deleteIfExists(path) {
 		...JSON.parse(await readFile(join(__dirname, "..", `mv${argv.manifest}`, "manifest.json")))
 	};
 	files["manifest.json"] = JSON.stringify(manifest, null, "	");
+
+	if(argv.manifest == "3") {
+		files["dnr_rules.json"] = await readFile(join(__dirname, "..", `mv${argv.manifest}`, "dnr_rules.json"))
+	}
 
 	if(argv.clean) await deleteIfExists(dist);
 	if(!await fileExists(dist)) await mkdir(dist);
