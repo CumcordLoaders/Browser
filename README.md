@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/CumcordLoaders/Browser/master/icons/48.png"/>
+  <img src="https://raw.githubusercontent.com/CumcordLoaders/Browser/master/ext/icons/48.png"/>
 </p>
 
 <p align="center">
